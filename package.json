@@ -1,0 +1,16 @@
+{
+  "name": "npm-outdated",
+  "version": "1.0.0",
+  "description": "npm outdated dependencies reporter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "argv": "0.0.2",
+    "q": "^1.4.1",
+    "semver": "^4.3.6"
+  }
+}

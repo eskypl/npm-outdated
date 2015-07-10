@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dependencies status for <%= name %> (<%= version %>)</title>
+    <style>
+        body {
+            font: normal 16px/1em "Source Sans Pro", Helvetica, Arial, sans-serif;
+            color: grey;
+            width: 700px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 700px;
+        }
+        h1 {
+            font-size: 2em;
+            margin: 2em .313em .313em;
+        }
+        h2 {
+            font-size: 1.4em;
+            margin: 2em .455em .455em;
+            float: left;
+        }
+        p {
+            margin: .625em;
+        }
+        h1, h2, th {
+            color: #4A4F54;
+        }
+        th, td {
+            text-align: left;
+            padding: .625em;
+        }
+        th {
+            border-top: 1px solid grey;
+        }
+        td {
+            border-top: 1px solid lightgrey;
+        }
+        th.name, td.name {
+            text-align: left;
+            font-weight: bold;
+            width: 200px;
+        }
+        th.version, td.version {
+            text-align: center;
+            width: 100px;
+        }
+        .summary {
+            margin: 1em .625em;
+        }
+        .ico {
+            width: 12px;
+            height: 12px;
+            margin: 0 1px;
+            display: inline-block;
+            border-radius: 100%;
+            background: #D5D5D5;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .ico.none, .none .ico.none {
+            background: #599B4A;
+        }
+        .ico.recommended, .recommended .ico.recommended {
+            background: #FFC40D;
+        }
+        .ico.required, .required .ico.required {
+            background: #C95555;
+        }
+        .summary .ico {
+            width: 48px;
+            height: 48px;
+            margin: 0 4px;
+            font-size: 2em;
+            line-height: 46px;
+        }
+        .summary.of-type {
+            float: right;
+            margin-top: 2.5em;
+            margin-bottom: 0;
+        }
+        .summary.of-type .ico {
+            width: 24px;
+            height: 24px;
+            margin: 0 1px;
+            font-size: 1em;
+            line-height: 22px;
+        }
+        .status .ico {
+            font-size: 1px;
+            overflow: hidden;
+            background: #D5D5D5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dependencies status</h1>
+    <p>for <strong><%= name %></strong> <%= version %></p>
+
+    <div class="summary total">
+        <div class="ico none"><%= summary.total.none.length %></div>
+        <div class="ico recommended"><%= summary.total.recommended.length %></div>
+        <div class="ico required"><%= summary.total.required.length %></div>
+    </div>
+
+    <h2>Runtime</h2>
+    <div class="summary of-type">
+        <div class="ico none"><%= summary.runtime.none.length %></div>
+        <div class="ico recommended"><%= summary.runtime.recommended.length %></div>
+        <div class="ico required"><%= summary.runtime.required.length %></div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th class="name">Name</th>
+                <th class="version">Requirement</th>
+                <th class="version">Patched</th>
+                <th class="version">Latest</th>
+                <th class="version">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% runtime.forEach(function(pkg){ %>
+            <tr class="<%= pkg.status %>">
+                <td class="name"><%= pkg.name %></td>
+                <td class="version"><%= pkg.requirement %></td>
+                <td class="version"><%= pkg.wanted %></td>
+                <td class="version"><%= pkg.latest %></td>
+                <td class="version status">
+                    <div class="ico none"></div>
+                    <div class="ico recommended"></div>
+                    <div class="ico required"></div>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <h2>Development</h2>
+    <div class="summary of-type">
+        <div class="ico none"><%= summary.development.none.length %></div>
+        <div class="ico recommended"><%= summary.development.recommended.length %></div>
+        <div class="ico required"><%= summary.development.required.length %></div>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th class="name">Name</th>
+            <th class="version">Requirement</th>
+            <th class="version">Patched</th>
+            <th class="version">Latest</th>
+            <th class="version">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% development.forEach(function(pkg){ %>
+        <tr class="<%= pkg.status %>">
+            <td class="name"><%= pkg.name %></td>
+            <td class="version"><%= pkg.requirement %></td>
+            <td class="version"><%= pkg.wanted %></td>
+            <td class="version"><%= pkg.latest %></td>
+            <td class="version status">
+                <div class="ico none"></div>
+                <div class="ico recommended"></div>
+                <div class="ico required"></div>
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+
+    <h2>Guide</h2>
+    <div class="ico none"></div> - no action is required.<br>
+    <div class="ico recommended"></div> - package update is recommended.<br>
+    <div class="ico required"></div> - package update is required.<br>
+
+    <h2><a href="http://semver.org/">Semantic Versioning</a></h2>
+    <a href="http://semver.npmjs.com/">npm semver calculator</a>
+
+</body>
+</html>
