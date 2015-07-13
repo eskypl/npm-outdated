@@ -1,6 +1,6 @@
 {
   "name": "npm-outdated",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "npm outdated dependencies reporter",
   "main": "bin/npm-outdated.js",
   "scripts": {
