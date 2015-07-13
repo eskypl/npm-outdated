@@ -21,13 +21,15 @@ module.exports = function (pkg, outputFile) {
         .then(function (data) {
             if (outputFile) {
                 var filepath = path.resolve(process.cwd(), outputFile);
-                return file.write(filepath, data);
+                file.write(filepath, data);
+                console.log('File written: "' + filepath + '"');
             } else {
                 console.log(data);
-                return;
             }
+
+            return;
         })
         .catch(function (e) {
-            console.error('reporter error', e.stack);
+            console.error('HTML reporter error:', e.stack);
         });
 };
