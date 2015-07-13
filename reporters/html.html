@@ -7,11 +7,11 @@
         body {
             font: normal 16px/1em "Source Sans Pro", Helvetica, Arial, sans-serif;
             color: grey;
-            width: 700px;
+            width: 800px;
         }
         table {
             border-collapse: collapse;
-            width: 700px;
+            width: 800px;
         }
         h1 {
             font-size: 2em;
@@ -20,7 +20,6 @@
         h2 {
             font-size: 1.4em;
             margin: 2em .455em .455em;
-            float: left;
         }
         p {
             margin: .625em;
@@ -42,10 +41,15 @@
             text-align: left;
             font-weight: bold;
             width: 200px;
+            max-width: 200px;
         }
         th.version, td.version {
             text-align: center;
             width: 100px;
+            max-width: 100px;
+        }
+        .left {
+            float: left;
         }
         .summary {
             margin: 1em .625em;
@@ -101,71 +105,79 @@
     <p>for <strong><%= name %></strong> <%= version %></p>
 
     <div class="summary total">
-        <div class="ico none"><%= summary.total.none.length %></div>
-        <div class="ico recommended"><%= summary.total.recommended.length %></div>
-        <div class="ico required"><%= summary.total.required.length %></div>
+        <span class="ico none"><%= summary.total.none.length %></span>
+        <span class="ico recommended"><%= summary.total.recommended.length %></span>
+        <span class="ico required"><%= summary.total.required.length %></span>
     </div>
 
-    <h2>Runtime</h2>
+    <p>
+        Packages which have to be updated: <%= summary.total.required.join(', ') %>.
+    </p>
+
+    <h2 class="left">Runtime</h2>
     <div class="summary of-type">
-        <div class="ico none"><%= summary.runtime.none.length %></div>
-        <div class="ico recommended"><%= summary.runtime.recommended.length %></div>
-        <div class="ico required"><%= summary.runtime.required.length %></div>
+        <span class="ico none"><%= summary.dependencies.none.length %></span>
+        <span class="ico recommended"><%= summary.dependencies.recommended.length %></span>
+        <span class="ico required"><%= summary.dependencies.required.length %></span>
     </div>
     <table>
         <thead>
             <tr>
                 <th class="name">Name</th>
                 <th class="version">Requirement</th>
+                <th class="version">Locked</th>
                 <th class="version">Patched</th>
                 <th class="version">Latest</th>
                 <th class="version">Status</th>
             </tr>
         </thead>
         <tbody>
-            <% runtime.forEach(function(pkg){ %>
+            <% _.each(dependencies,function(pkg){ %>
             <tr class="<%= pkg.status %>">
                 <td class="name"><%= pkg.name %></td>
-                <td class="version"><%= pkg.requirement %></td>
+                <td class="version"><%= pkg.required %></td>
+                <td class="version"><%= pkg.locked %></td>
                 <td class="version"><%= pkg.wanted %></td>
                 <td class="version"><%= pkg.latest %></td>
                 <td class="version status">
-                    <div class="ico none"></div>
-                    <div class="ico recommended"></div>
-                    <div class="ico required"></div>
+                    <span class="ico none"></span>
+                    <span class="ico recommended"></span>
+                    <span class="ico required"></span>
                 </td>
             </tr>
             <% }); %>
         </tbody>
     </table>
 
-    <h2>Development</h2>
+    <h2 class="left">Development</h2>
     <div class="summary of-type">
-        <div class="ico none"><%= summary.development.none.length %></div>
-        <div class="ico recommended"><%= summary.development.recommended.length %></div>
-        <div class="ico required"><%= summary.development.required.length %></div>
+        <span class="ico none"><%= summary.devDependencies.none.length %></span>
+        <span class="ico recommended"><%= summary.devDependencies.recommended.length %></span>
+        <span class="ico required"><%= summary.devDependencies.required.length %></span>
     </div>
     <table>
         <thead>
         <tr>
             <th class="name">Name</th>
             <th class="version">Requirement</th>
+            <th class="version">Locked</th>
             <th class="version">Patched</th>
             <th class="version">Latest</th>
             <th class="version">Status</th>
         </tr>
         </thead>
         <tbody>
-        <% development.forEach(function(pkg){ %>
+        <% _.each(devDependencies,function(pkg){ %>
         <tr class="<%= pkg.status %>">
             <td class="name"><%= pkg.name %></td>
-            <td class="version"><%= pkg.requirement %></td>
+            <td class="version"><%= pkg.required %></td>
+            <td class="version"><%= pkg.locked %></td>
             <td class="version"><%= pkg.wanted %></td>
             <td class="version"><%= pkg.latest %></td>
             <td class="version status">
-                <div class="ico none"></div>
-                <div class="ico recommended"></div>
-                <div class="ico required"></div>
+                <span class="ico none"></span>
+                <span class="ico recommended"></span>
+                <span class="ico required"></span>
             </td>
         </tr>
         <% }); %>
@@ -173,12 +185,16 @@
     </table>
 
     <h2>Guide</h2>
-    <div class="ico none"></div> - no action is required.<br>
-    <div class="ico recommended"></div> - package update is recommended.<br>
-    <div class="ico required"></div> - package update is required.<br>
+    <p>
+        <span class="ico none"></span> - no action is required.<br>
+        <span class="ico recommended"></span> - package update is recommended.<br>
+        <span class="ico required"></span> - package update is required.<br>
+    </p>
 
     <h2><a href="http://semver.org/">Semantic Versioning</a></h2>
-    <a href="http://semver.npmjs.com/">npm semver calculator</a>
+    <p>
+        <a href="http://semver.npmjs.com/">npm semver calculator</a>
+    </p>
 
 </body>
 </html>
