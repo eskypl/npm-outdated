@@ -25,6 +25,13 @@ argv.option({
 });
 
 argv.option({
+    name: 'template',
+    short: 't',
+    type: 'string',
+    description: 'Name of the template for html reporter. Defaults to "default"'
+});
+
+argv.option({
     name: 'reporter',
     short: 'r',
     type: 'string',
@@ -151,7 +158,10 @@ function buildSummary(list) {
 }
 
 function prepareReporter(data) {
-    return [data, args.options.output];
+    return [data, {
+        output: args.options.output,
+        template: args.options.template
+    }];
 }
 
 function report(name) {
@@ -161,12 +171,15 @@ function report(name) {
     if (!reporterName) {
         reporterName = 'json';
     }
-    try {
-        return require('../reporters/' + reporterName);
-    } catch (e) {
-        throw new Error('Cannot find reporter: ' + reporterName);
-    }
 
+    return function (data, options) {
+        try {
+            require('../reporters/' + reporterName)(data, options);
+            return data;
+        } catch (e) {
+            throw new Error('Cannot find reporter: ' + reporterName);
+        }
+    }
 }
 
 Q.all([
@@ -180,4 +193,5 @@ Q.all([
 .spread(report(args.options.reporter))
 .catch(function (error) {
     console.error(error.stack);
+    process.exit(1);
 });

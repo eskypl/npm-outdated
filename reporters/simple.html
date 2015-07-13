@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dependencies status for <%= name %> (<%= version %>)</title>
+    <style>
+        body {
+            font: normal 16px/1em "Source Sans Pro", Helvetica, Arial, sans-serif;
+            color: grey;
+            width: 800px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 800px;
+        }
+        h1 {
+            font-size: 2em;
+            margin: 2em .313em .313em;
+        }
+        h2 {
+            font-size: 1.4em;
+            margin: 2em .455em .455em;
+        }
+        p {
+            margin: .625em;
+        }
+        h1, h2, th {
+            color: #4A4F54;
+        }
+        th, td {
+            text-align: left;
+            padding: .625em;
+        }
+        th {
+            border-top: 1px solid grey;
+        }
+        td {
+            border-top: 1px solid lightgrey;
+        }
+        th.name, td.name {
+            text-align: left;
+            font-weight: bold;
+            width: 200px;
+            max-width: 200px;
+        }
+        th.version, td.version {
+            text-align: center;
+            width: 100px;
+            max-width: 100px;
+        }
+        .left {
+            float: left;
+        }
+        .summary {
+            margin: 1em .625em;
+        }
+        .status {
+            display: inline;
+            color: #D5D5D5;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .status.none, .none .status.none {
+            color: #599B4A;
+        }
+        .recommended td.name, .status.recommended, .recommended .status.recommended {
+            color: #FFC40D;
+        }
+        .required td.name, .status.required, .required .status.required {
+            color: #C95555;
+        }
+        .summary .status {
+            width: 48px;
+            height: 48px;
+            margin: 0 4px;
+            font-size: 2em;
+            line-height: 46px;
+        }
+        .summary.of-type {
+            float: right;
+            margin-top: 2.5em;
+            margin-bottom: 0;
+        }
+        .summary.of-type .status {
+            width: 24px;
+            height: 24px;
+            margin: 0 1px;
+            font-size: 1em;
+            line-height: 22px;
+        }
+    </style>
+</head>
+<body>
+<h1>Dependencies status</h1>
+<p>for <strong><%= name %></strong> <%= version %></p>
+
+<div class="summary total">
+    <span class="status none"><%= summary.total.none.length %></span>
+    <span class="status recommended"><%= summary.total.recommended.length %></span>
+    <span class="status required"><%= summary.total.required.length %></span>
+</div>
+
+<p>
+    Packages which have to be updated: <%= summary.total.required.join(', ') %>.
+</p>
+
+<h2 class="left">Runtime</h2>
+<div class="summary of-type">
+    <span class="status none"><%= summary.dependencies.none.length %></span>
+    <span class="status recommended"><%= summary.dependencies.recommended.length %></span>
+    <span class="status required"><%= summary.dependencies.required.length %></span>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th class="name">Name</th>
+        <th class="version">Requirement</th>
+        <th class="version">Locked</th>
+        <th class="version">Patched</th>
+        <th class="version">Latest</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(dependencies,function(pkg){ %>
+    <tr class="<%= pkg.status %>">
+        <td class="name"><%= pkg.name %></td>
+        <td class="version"><%= pkg.required %></td>
+        <td class="version"><%= pkg.locked %></td>
+        <td class="version"><%= pkg.wanted %></td>
+        <td class="version"><%= pkg.latest %></td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<h2 class="left">Development</h2>
+<div class="summary of-type">
+    <span class="status none"><%= summary.devDependencies.none.length %></span>
+    <span class="status recommended"><%= summary.devDependencies.recommended.length %></span>
+    <span class="status required"><%= summary.devDependencies.required.length %></span>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th class="name">Name</th>
+        <th class="version">Requirement</th>
+        <th class="version">Locked</th>
+        <th class="version">Patched</th>
+        <th class="version">Latest</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(devDependencies,function(pkg){ %>
+    <tr class="<%= pkg.status %>">
+        <td class="name"><%= pkg.name %></td>
+        <td class="version"><%= pkg.required %></td>
+        <td class="version"><%= pkg.locked %></td>
+        <td class="version"><%= pkg.wanted %></td>
+        <td class="version"><%= pkg.latest %></td>
+    </tr>
+    <% }); %>
+    </tbody>
+</table>
+
+<h2>Guide</h2>
+<p>
+    <span class="status none">no action is required.</span><br>
+    <span class="status recommended">package update is recommended.</span><br>
+    <span class="status required">package update is required.</span><br>
+</p>
+
+<h2><a href="http://semver.org/">Semantic Versioning</a></h2>
+<p>
+    <a href="http://semver.npmjs.com/">npm semver calculator</a>
+</p>
+
+</body>
+</html>
