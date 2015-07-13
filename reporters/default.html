@@ -54,7 +54,7 @@
         .summary {
             margin: 1em .625em;
         }
-        .status {
+        .ico {
             width: 12px;
             height: 12px;
             margin: 0 1px;
@@ -65,16 +65,16 @@
             text-align: center;
             vertical-align: middle;
         }
-        .status.none, .none .status.none {
+        .ico.none, .none .ico.none {
             background: #599B4A;
         }
-        .status.recommended, .recommended .status.recommended {
+        .ico.recommended, .recommended .ico.recommended {
             background: #FFC40D;
         }
-        .status.required, .required .status.required {
+        .ico.required, .required .ico.required {
             background: #C95555;
         }
-        .summary .status {
+        .summary .ico {
             width: 48px;
             height: 48px;
             margin: 0 4px;
@@ -86,14 +86,14 @@
             margin-top: 2.5em;
             margin-bottom: 0;
         }
-        .summary.of-type .status {
+        .summary.of-type .ico {
             width: 24px;
             height: 24px;
             margin: 0 1px;
             font-size: 1em;
             line-height: 22px;
         }
-        .status .status {
+        .status .ico {
             font-size: 1px;
             overflow: hidden;
             background: #D5D5D5;
@@ -105,9 +105,9 @@
     <p>for <strong><%= name %></strong> <%= version %></p>
 
     <div class="summary total">
-        <span class="status none"><%= summary.total.none.length %></span>
-        <span class="status recommended"><%= summary.total.recommended.length %></span>
-        <span class="status required"><%= summary.total.required.length %></span>
+        <span class="ico none"><%= summary.total.none.length %></span>
+        <span class="ico recommended"><%= summary.total.recommended.length %></span>
+        <span class="ico required"><%= summary.total.required.length %></span>
     </div>
 
     <p>
@@ -116,9 +116,9 @@
 
     <h2 class="left">Runtime</h2>
     <div class="summary of-type">
-        <span class="status none"><%= summary.dependencies.none.length %></span>
-        <span class="status recommended"><%= summary.dependencies.recommended.length %></span>
-        <span class="status required"><%= summary.dependencies.required.length %></span>
+        <span class="ico none"><%= summary.dependencies.none.length %></span>
+        <span class="ico recommended"><%= summary.dependencies.recommended.length %></span>
+        <span class="ico required"><%= summary.dependencies.required.length %></span>
     </div>
     <table>
         <thead>
@@ -140,9 +140,9 @@
                 <td class="version"><%= pkg.wanted %></td>
                 <td class="version"><%= pkg.latest %></td>
                 <td class="version status">
-                    <span class="status none"></span>
-                    <span class="status recommended"></span>
-                    <span class="status required"></span>
+                    <span class="ico none"></span>
+                    <span class="ico recommended"></span>
+                    <span class="ico required"></span>
                 </td>
             </tr>
             <% }); %>
@@ -151,9 +151,9 @@
 
     <h2 class="left">Development</h2>
     <div class="summary of-type">
-        <span class="status none"><%= summary.devDependencies.none.length %></span>
-        <span class="status recommended"><%= summary.devDependencies.recommended.length %></span>
-        <span class="status required"><%= summary.devDependencies.required.length %></span>
+        <span class="ico none"><%= summary.devDependencies.none.length %></span>
+        <span class="ico recommended"><%= summary.devDependencies.recommended.length %></span>
+        <span class="ico required"><%= summary.devDependencies.required.length %></span>
     </div>
     <table>
         <thead>
@@ -175,9 +175,9 @@
             <td class="version"><%= pkg.wanted %></td>
             <td class="version"><%= pkg.latest %></td>
             <td class="version status">
-                <span class="status none"></span>
-                <span class="status recommended"></span>
-                <span class="status required"></span>
+                <span class="ico none"></span>
+                <span class="ico recommended"></span>
+                <span class="ico required"></span>
             </td>
         </tr>
         <% }); %>
@@ -186,9 +186,9 @@
 
     <h2>Guide</h2>
     <p>
-        <span class="status none"></span> - no action is required.<br>
-        <span class="status recommended"></span> - package update is recommended.<br>
-        <span class="status required"></span> - package update is required.<br>
+        <span class="ico none"></span> - no action is required.<br>
+        <span class="ico recommended"></span> - package update is recommended.<br>
+        <span class="ico required"></span> - package update is required.<br>
     </p>
 
     <h2><a href="http://semver.org/">Semantic Versioning</a></h2>
